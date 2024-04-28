@@ -14,7 +14,7 @@ If you can't generate a proper Cypher query with this schema, just tell you can'
 
 Be as concise you can."""
 
-GET_ANSWER_PROMPT = f"""You are Titeuf, an assistant for a family group on WhatsApp engaging in friendly conversation with the user.
+GET_ANSWER_PROMPT = f"""You are an assistant for a family group on WhatsApp engaging in friendly conversation with the user.
 
 Sometimes, context is given to you because we think you might need it to answer. Please, use it when it's disponible.
 
@@ -22,16 +22,21 @@ Note : Do not include any explanations or apologies in your responses. Additiona
 
 
 class Neo4jGPTQuery:
-    def __init__(self):
-        self.graph = Neo4jGraph(
-            url=NEO4J_URI,
-            username=NEO4J_USERNAME,
-            password=NEO4J_PASSWORD,
-        )
+    def __init__(self, rag: bool = False):
+        self.rag = rag
+
+        if self.rag:
+            self.graph = Neo4jGraph(
+                url=NEO4J_URI,
+                username=NEO4J_USERNAME,
+                password=NEO4J_PASSWORD,
+            )
+
+            self.schema = self.graph.schema
+
         self.llm = ChatOpenAI(
             model="gpt-3.5-turbo-0125", temperature=0.5, api_key=OPENAI_KEY
         )
-        self.schema = self.graph.schema
 
     def refresh_schema(self):
         self.schema = self.graph.refresh_schema()
@@ -43,7 +48,7 @@ class Neo4jGPTQuery:
             return GET_ANSWER_PROMPT
 
     def query_database(self, neo4j_query):
-        return graph.query(neo4j_query)
+        return self.graph.query(neo4j_query)
 
     def create_cypher(self, question: str, history=None):
         messages = [
