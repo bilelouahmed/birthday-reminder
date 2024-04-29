@@ -14,7 +14,7 @@ def timestamp_to_date(timestamp):
     return datetime.fromtimestamp(timestamp).strftime("%d-%m-%Y %H:%M:%S")
 
 
-def read_file_list(file_name: str = "whitelist.txt"):
+def read_file_list(file_name: str = "/lists/whitelist.txt"):
     with open(file_name, "r") as file:
         lines = file.readlines()
 

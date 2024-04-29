@@ -13,7 +13,7 @@ session = Whatsapp()
 app = Flask(__name__)
 CORS(app)
 
-NOTIFIED = read_file_list("notified.txt")
+NOTIFIED = read_file_list("/lists/notified.txt")
 
 DELAY = 86400  # 1 day
 

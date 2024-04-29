@@ -20,7 +20,7 @@ session = Whatsapp()
 app = Flask(__name__)
 CORS(app)
 
-WHITELIST = read_file_list("whitelist.txt")
+WHITELIST = read_file_list("/lists/whitelist.txt")
 
 
 @app.post("/api/add_whitelist")
