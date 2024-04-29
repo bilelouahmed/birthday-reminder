@@ -1,4 +1,4 @@
-# Birthday Reminder
+# Birthday Reminder (WIP)
 Birthday reminder (and Chatbot) for Whatsapp family groups based on RAG and Graph Knowledge.
 
 TO DO : Take into account history
