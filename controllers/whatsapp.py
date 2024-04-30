@@ -40,8 +40,11 @@ class Whatsapp:
                 }
             ),
         )
+        start_waiting = time.time()
+        while starting_session.status_code != 201 or time.time() - start_waiting <= 30:
+            time.sleep(5)
+
         if starting_session.status_code == 201:
-            time.sleep(10)
             qr_code = requests.get(
                 url=f"{self.url}/api/default/auth/qr?format=image",
                 headers={"Accept": "image/png"},
